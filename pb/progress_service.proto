@@ -1,0 +1,26 @@
+syntax = "proto3";
+package pb;
+
+import "progress.proto";
+
+message NewProgressBarRequest {
+  uint32 startingProgress = 1;
+}
+
+message NewProgressBarResponse {
+  string id = 1;
+  string token = 2;
+}
+
+message ProgressBarStatusRequest {
+  repeated string ids = 1;
+}
+
+message ProgressBarStatusResponse {
+  repeated ProgressBar progressBars = 1;
+}
+
+service ProgressBarService {
+  rpc NewProgressBar (NewProgressBarRequest) returns (NewProgressBarResponse);
+  rpc GetProgressBarStatus (ProgressBarStatusRequest) returns (ProgressBarStatusResponse);
+}

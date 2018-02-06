@@ -1,0 +1,18 @@
+package: github.com/jmhobbs/pbaas
+import:
+- package: github.com/golang/protobuf
+  version: ^1.0.0
+  subpackages:
+  - proto
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/grpc
+  version: ^1.9.2
+- package: github.com/satori/go.uuid
+  version: ^1.2.0
+- package: golang.org/x/text
+  subpackages:
+  - secure/bidirule
+- package: github.com/gorilla/mux
+  version: ^1.6.1
