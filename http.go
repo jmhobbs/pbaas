@@ -17,7 +17,9 @@ type progressBarWebServer struct {
 
 func NewWebServer(db ProgressDB) progressBarWebServer {
 	router := mux.NewRouter()
-	router.Handle("/{id}", GetProgressBarHandler(db)).Methods("GET")
+	router.Handle(
+		"/{id}", 
+		GetProgressBarHandler(db)).Methods("GET")
 	router.Handle("/{id}", UpdateProgressBarHandler(db)).Methods("PUT")
 	router.Handle("/", CreateProgressBarHandler(db)).Methods("POST")
 	return progressBarWebServer{router}
