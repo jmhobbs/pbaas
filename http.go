@@ -49,7 +49,7 @@ func GetProgressBarHandler(db ProgressDB) http.Handler {
 
 func CreateProgressBarHandler(db ProgressDB) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		id := uuid.Must(uuid.NewV4()).String()
+		id := uuid.NewV4().String()
 		token := newToken()
 		db.Create(id, token, 0) // TODO: Starting progress
 
