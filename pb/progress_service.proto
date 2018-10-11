@@ -20,7 +20,20 @@ message ProgressBarStatusResponse {
   repeated ProgressBar progressBars = 1;
 }
 
+message UpdateProgressBarRequest {
+  string id = 1;
+  string token = 2;
+  uint32 newProgressValue = 3;
+}
+
+message UpdateProgressBarResponse {
+  string id = 1;
+  string token = 2;
+  uint32 newProgressValue = 3;
+}
+
 service ProgressBarService {
   rpc NewProgressBar (NewProgressBarRequest) returns (NewProgressBarResponse);
   rpc GetProgressBarStatus (ProgressBarStatusRequest) returns (ProgressBarStatusResponse);
+  rpc UpdateProgressBar (UpdateProgressBarRequest) returns (UpdateProgressBarResponse);
 }

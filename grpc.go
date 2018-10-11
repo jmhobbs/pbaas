@@ -22,7 +22,7 @@ type progressBarServiceServer struct {
 }
 
 func (ps progressBarServiceServer) NewProgressBar(ctx context.Context, pr *pb.NewProgressBarRequest) (*pb.NewProgressBarResponse, error) {
-	id := uuid.Must(uuid.NewV4()).String()
+	id := uuid.NewV4().String()
 	token := newToken()
 	ps.db.Create(id, token, pr.GetStartingProgress())
 	return &pb.NewProgressBarResponse{Id: id, Token: token}, nil
@@ -34,6 +34,14 @@ func (ps progressBarServiceServer) GetProgressBarStatus(ctx context.Context, pr 
 		pbs = append(pbs, &pb.ProgressBar{id, ps.db.Get(id)})
 	}
 	return &pb.ProgressBarStatusResponse{ProgressBars: pbs}, nil
+}
+
+func (ps progressBarServiceServer) UpdateProgressBar(ctx context.Context, pr *pb.UpdateProgressBarRequest) (*pb.UpdateProgressBarResponse, error) {
+	return &pb.UpdateProgressBarResponse{
+		Id: pr.Id,
+		NewProgressValue: pr.NewProgressValue,
+		Token: pr.Token,
+	}, nil
 }
 
 func (ps progressBarServiceServer) Serve(address string) error {
