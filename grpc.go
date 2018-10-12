@@ -3,12 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/pkg/errors"
 	"math/rand"
 	"net"
 	"time"
 
 	"github.com/jmhobbs/pbaas/pb"
-	uuid "github.com/satori/go.uuid"
+	"github.com/satori/go.uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -37,6 +38,11 @@ func (ps progressBarServiceServer) GetProgressBarStatus(ctx context.Context, pr 
 }
 
 func (ps progressBarServiceServer) UpdateProgressBar(ctx context.Context, pr *pb.UpdateProgressBarRequest) (*pb.UpdateProgressBarResponse, error) {
+
+	if !ps.db.Update(pr.Id, pr.Token, uint32(pr.NewProgressValue)) {
+		return nil, errors.New("Invalid Token")
+	}
+
 	return &pb.UpdateProgressBarResponse{
 		Id: pr.Id,
 		NewProgressValue: pr.NewProgressValue,
