@@ -9,6 +9,7 @@ type ProgressDB interface {
 	Create(string, string, uint32)
 	Update(string, string, uint32) bool
 	Get(string) uint32
+	Delete(string) bool
 }
 
 type InMemoryProgressDB struct {
@@ -63,4 +64,17 @@ func (db *InMemoryProgressDB) Get(id string) uint32 {
 	db.Lock()
 	defer db.Unlock()
 	return db.pbs[id]
+}
+
+// Delete item in the InMemoryProgressDB
+func (db *InMemoryProgressDB) Delete(id string) bool {
+	db.Lock()
+	defer db.Unlock()
+	_, ok := db.pbs[id]
+	if ok {
+		delete(db.pbs, id)
+		return true
+	}
+
+	return false
 }

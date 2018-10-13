@@ -50,6 +50,18 @@ func (ps progressBarServiceServer) UpdateProgressBar(ctx context.Context, pr *pb
 	}, nil
 }
 
+func (ps progressBarServiceServer) DeleteProgressBar(ctx context.Context, pr *pb.ProgressBarStatusRequest) (*pb.ProgressBarStatusResponse, error) {
+	pbs := []*pb.ProgressBar{}
+
+	for _, id := range pr.GetIds() {
+		if ok := ps.db.Delete(id); ok {
+			pbs = append(pbs, &pb.ProgressBar{id, ps.db.Get(id)})
+		}
+	}
+
+	return &pb.ProgressBarStatusResponse{ProgressBars: pbs}, nil
+}
+
 func (ps progressBarServiceServer) Serve(address string) error {
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
