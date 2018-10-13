@@ -36,4 +36,5 @@ service ProgressBarService {
   rpc NewProgressBar (NewProgressBarRequest) returns (NewProgressBarResponse);
   rpc GetProgressBarStatus (ProgressBarStatusRequest) returns (ProgressBarStatusResponse);
   rpc UpdateProgressBar (UpdateProgressBarRequest) returns (UpdateProgressBarResponse);
+  rpc DeleteProgressBar (ProgressBarStatusRequest) returns (ProgressBarStatusResponse);
 }
